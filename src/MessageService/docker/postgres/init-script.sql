@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS "message"
     id           uuid      NOT NULL DEFAULT uuid_generate_v4()
         CONSTRAINT user_pk
             PRIMARY KEY,
-    content         text      NOT NULL,
-    date_created timestamp NOT NULL DEFAULT NOW()
+    content         text      NOT NULL
 );
 
 ALTER TABLE "message"
