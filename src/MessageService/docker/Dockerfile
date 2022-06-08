@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["MessageService/MessageService.csproj", "MessageService/"]
-RUN dotnet restore "MessageService/MessageService.csproj"
+COPY ["src/MessageService/MessageService.csproj", "src/MessageService/"]
+RUN dotnet restore "src/MessageService/MessageService.csproj"
 COPY . .
-WORKDIR "/src/MessageService"
+WORKDIR "/src/src/MessageService"
 RUN dotnet build "MessageService.csproj" -c Release -o /app/build
 
 FROM build AS publish

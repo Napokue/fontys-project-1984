@@ -1,0 +1,27 @@
+﻿@page "/sendMessagePage"
+@using WebApp.Models
+
+<PageTitle>Send Message</PageTitle>
+
+<EditForm Model="@_sendMessageModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group col-md-4">
+        <div class="d-flex flex-column">
+            <label for="message" class="control-label">Message</label>
+            <InputTextArea id="message" @bind-Value="_sendMessageModel.Content" class="form-control"/>
+        </div>
+    </div>
+    
+    <button type="submit">Create</button>
+</EditForm>
+
+@code {
+    private SendMessageModel _sendMessageModel = new();
+
+    private void HandleValidSubmit()
+    {
+        // TODO
+    }
+}
