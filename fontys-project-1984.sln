@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLib", "src\Database
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageService", "src\MessageService\MessageService.csproj", "{F504EBF9-FF97-4FEF-A116-261CAA597C82}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{72B27CDD-3C58-4420-BF54-EE0487DFF007}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageService.Tests", "tests\MessageService.Tests\MessageService.Tests.csproj", "{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,11 +31,18 @@ Global
 		{F504EBF9-FF97-4FEF-A116-261CAA597C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F504EBF9-FF97-4FEF-A116-261CAA597C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F504EBF9-FF97-4FEF-A116-261CAA597C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B06F9997-FF69-494F-8996-099DDEC2FB22}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED} = {72B27CDD-3C58-4420-BF54-EE0487DFF007}
 	EndGlobalSection
 EndGlobal
