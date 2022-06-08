@@ -1,11 +1,22 @@
-﻿using MessageService.Models;
+﻿using DatabaseLib;
+using MessageService.Models;
 
 namespace MessageService.Factories;
 
 public class TextMessageFactory : IMessageFactory
 {
-    public IMessage Create(string content)
+    private readonly IRepository<TextMessage> _textMessageRepository;
+
+    public TextMessageFactory(IRepository<TextMessage> textMessageRepository)
     {
-        throw new NotImplementedException();
+        _textMessageRepository = textMessageRepository;
     }
+
+    public async Task<IMessage> Create(string content)
+    {
+        var textMessage = new TextMessage(content);
+        await _textMessageRepository.AddAsync(textMessage);
+        return textMessage;
+    }
+
 }

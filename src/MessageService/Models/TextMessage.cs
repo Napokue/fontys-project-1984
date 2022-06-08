@@ -1,6 +1,6 @@
 ﻿namespace MessageService.Models;
 
-internal sealed class TextMessage : IMessage
+public sealed class TextMessage : IMessage
 {
     public Guid Id { get; set; }
     public string Content { get; set; }

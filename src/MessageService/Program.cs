@@ -4,6 +4,7 @@ using DatabaseLib.Factories;
 using DatabaseLib.Services;
 using MessageService.Factories;
 using MessageService.Models;
+using MessageService.Models.Rules;
 using MessageService.Repository;
 using MessageService.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -30,12 +31,33 @@ builder.Services.AddSingleton(_ =>
 builder.Services.AddSingleton<TextMessageRepository>();
 builder.Services.AddSingleton<IMessageFactory, TextMessageFactory>();
 builder.Services.AddScoped<IMessageValidator, MessageValidator>();
+builder.Services.AddScoped(_ =>
+{
+    return new IRule[]
+    {
+        new LowercaseRule(),
+        new UppercaseSpecificWordRule("Big Brother")
+    };
+});
 
 var app = builder.Build();
 
-app.MapPost("/", (
+app.MapPost("/", async (
     [FromBody] string content,
     IMessageFactory messageFactory,
-    IMessageValidator messageValidator) => Results.Ok());
+    IMessageValidator messageValidator,
+    IRule[] rules) =>
+{
+    try
+    {
+        var message = await messageFactory.Create(content);
+        messageValidator.ValidateMessage(message, rules);
+        return Results.Ok();
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
+});
 
 app.Run();

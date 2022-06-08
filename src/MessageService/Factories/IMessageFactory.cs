@@ -4,5 +4,5 @@ namespace MessageService.Factories;
 
 public interface IMessageFactory
 {
-    public IMessage Create(string content);
+    public Task<IMessage> Create(string content);
 }
