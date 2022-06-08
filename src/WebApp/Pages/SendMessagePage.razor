@@ -1,6 +1,9 @@
 ﻿@page "/sendMessagePage"
 @using WebApp.Models
 
+@using WebApp.Clients
+@inject MessageServiceClient MessageServiceClient;
+
 <PageTitle>Send Message</PageTitle>
 
 <EditForm Model="@_sendMessageModel" OnValidSubmit="@HandleValidSubmit">
@@ -20,8 +23,9 @@
 @code {
     private SendMessageModel _sendMessageModel = new();
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
-        // TODO
+        await MessageServiceClient.SendMessage(_sendMessageModel);
+        _sendMessageModel.Content = string.Empty;
     }
 }

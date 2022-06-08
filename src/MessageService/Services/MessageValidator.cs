@@ -13,18 +13,21 @@ public class MessageValidator : IMessageValidator
         _textMessageRepository = textMessageRepository;
     }
 
-    public void ValidateMessage(IMessage message, IRule[] rules)
+    public async Task ValidateMessage(IMessage message, IRule[] rules)
     {
         var words = message.Content.Split(' ').ToList();
-
+        var newWords = new List<string>(words.Count);
+        
         foreach (var word in words)
         {
+            var newWord = word;
             foreach (var rule in rules)
             {
-                rule.ValidateWord(word);
+                newWord = rule.ValidateWord(newWord);
             }
+            newWords.Add(newWord);
         }
 
-        _textMessageRepository.UpdateAsync(new TextMessage(message.Content));
+        await _textMessageRepository.AddAsync(new TextMessage(string.Join(' ', newWords)));
     }
 }

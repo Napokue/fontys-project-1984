@@ -50,7 +50,7 @@ app.MapPost("/", async (
 {
     try
     {
-        var message = await messageFactory.Create(content);
+        var message = messageFactory.Create(content);
         messageValidator.ValidateMessage(message, rules);
         return Results.Ok();
     }

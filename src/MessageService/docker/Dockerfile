@@ -11,10 +11,10 @@ COPY ["src/MessageService/MessageService.csproj", "src/MessageService/"]
 RUN dotnet restore "src/MessageService/MessageService.csproj"
 COPY . .
 WORKDIR "/src/src/MessageService"
-RUN dotnet build "MessageService.csproj" -c Release -o /app/build
+RUN dotnet build "MessageService.csproj" -c Debug -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MessageService.csproj" -c Release -o /app/publish
+RUN dotnet publish "MessageService.csproj" -c Debug -o /app/publish
 
 FROM base AS final
 WORKDIR /app
