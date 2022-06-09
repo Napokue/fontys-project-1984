@@ -7,7 +7,7 @@ using MessageService.Models;
 
 namespace MessageService.Repository;
 
-internal class TextMessageRepository : IRepository<TextMessage>
+public class TextMessageRepository : IRepository<TextMessage>
 {
     private const string ConnectionString =
         "Host=message-service-postgres:5432;Username=Admin;Password=P@ssWord1!;Database=message_service";
