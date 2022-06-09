@@ -31,12 +31,14 @@ builder.Services.AddSingleton(_ =>
 builder.Services.AddSingleton<TextMessageRepository>();
 builder.Services.AddSingleton<IMessageFactory, TextMessageFactory>();
 builder.Services.AddScoped<IMessageValidator, MessageValidator>();
-builder.Services.AddScoped(_ =>
+builder.Services.AddScoped(provider =>
 {
-    return new IRule[]
+    var messageFactory = provider.GetService<IMessageFactory>()!;
+
+    return new AbstractRule[]
     {
-        new LowercaseRule(),
-        new UppercaseSpecificWordRule("Big Brother")
+        new LowercaseRule(messageFactory),
+        new UppercaseSpecificWordBaseRule(messageFactory, "Big Brother")
     };
 });
 
@@ -46,12 +48,12 @@ app.MapPost("/", async (
     [FromBody] string content,
     IMessageFactory messageFactory,
     IMessageValidator messageValidator,
-    IRule[] rules) =>
+    AbstractRule[] rules) =>
 {
     try
     {
         var message = messageFactory.Create(content);
-        messageValidator.ValidateMessage(message, rules);
+        await messageValidator.ValidateMessage(message, rules);
         return Results.Ok();
     }
     catch (Exception e)

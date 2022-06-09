@@ -5,5 +5,5 @@ namespace MessageService.Services;
 
 public interface IMessageValidator
 {
-    public Task ValidateMessage(IMessage message, IRule[] rules);
+    public Task ValidateMessage(IMessage message, AbstractRule[] rules);
 }

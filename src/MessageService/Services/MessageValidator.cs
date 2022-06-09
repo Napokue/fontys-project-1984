@@ -6,28 +6,21 @@ namespace MessageService.Services;
 
 public class MessageValidator : IMessageValidator
 {
-    private readonly IRepository<TextMessage> _textMessageRepository;
+    private readonly IRepository<IMessage> _messageRepository;
 
-    public MessageValidator(IRepository<TextMessage> textMessageRepository)
+    public MessageValidator(IRepository<IMessage> messageRepository)
     {
-        _textMessageRepository = textMessageRepository;
+        _messageRepository = messageRepository;
     }
 
-    public async Task ValidateMessage(IMessage message, IRule[] rules)
+    public async Task ValidateMessage(IMessage message, AbstractRule[] rules)
     {
-        var words = message.Content.Split(' ').ToList();
-        var newWords = new List<string>(words.Count);
-        
-        foreach (var word in words)
+        IMessage messageNew; 
+        foreach (var rule in rules)
         {
-            var newWord = word;
-            foreach (var rule in rules)
-            {
-                newWord = rule.ValidateWord(newWord);
-            }
-            newWords.Add(newWord);
+            messageNew = rule.ValidateMessage(message);
         }
 
-        await _textMessageRepository.AddAsync(new TextMessage(string.Join(' ', newWords)));
+        await _messageRepository.AddAsync(message);
     }
 }
