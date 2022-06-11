@@ -2,18 +2,18 @@
 
 namespace WebApp.Clients;
 
-public class ReplacementWordServiceClient
+public class ReplacementWordsServiceClient
 {
     private readonly HttpClient _client;
 
-    public ReplacementWordServiceClient(HttpClient client)
+    public ReplacementWordsServiceClient(HttpClient client)
     {
         _client = client;
         _client.BaseAddress = new Uri("http://replacement-words-service:80/");
     }
     
     public async Task<IEnumerable<ReplacementWordModel>?> GetReplacementWordsAsync(int skip = 0, int take = 10) =>
-        await _client.GetFromJsonAsync<IEnumerable<ReplacementWordModel>>($"/?skip={skip}&take={take}");
+        await _client.GetFromJsonAsync<IEnumerable<ReplacementWordModel>>($"/all?skip={skip}&take={take}");
 
     public async Task CreateReplacementWordAsync(ReplacementWordModel replacementWordModel) =>
         await _client.PostAsJsonAsync("/", replacementWordModel);

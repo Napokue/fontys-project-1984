@@ -2,11 +2,11 @@
 
 namespace MessageService.Clients;
 
-public class ReplacementWordServiceClient
+public class ReplacementWordsServiceClient
 {
     private readonly HttpClient _client;
 
-    public ReplacementWordServiceClient(HttpClient client)
+    public ReplacementWordsServiceClient(HttpClient client)
     {
         _client = client;
         _client.BaseAddress = new Uri("http://replacement-words-service:80/");

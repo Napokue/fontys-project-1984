@@ -29,7 +29,7 @@ builder.Services.AddSingleton(_ =>
     return mappingService;
 });
 
-builder.Services.AddHttpClient<ReplacementWordServiceClient>();
+builder.Services.AddHttpClient<ReplacementWordsServiceClient>();
 
 builder.Services.AddSingleton<TextMessageRepository>();
 builder.Services.AddSingleton<IMessageFactory, TextMessageFactory>();
@@ -43,7 +43,7 @@ builder.Services.AddScoped(provider =>
         new LowercaseRule(messageFactory),
         new UppercaseSpecificWordBaseRule(messageFactory, "Big Brother"),
         new AmountOfWordsRule(messageFactory, 100),
-        new ReplacementWordRule(messageFactory, provider.GetService<ReplacementWordServiceClient>()!)
+        new ReplacementWordRule(messageFactory, provider.GetService<ReplacementWordsServiceClient>()!)
     };
 });
 

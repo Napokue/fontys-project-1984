@@ -1,0 +1,57 @@
+﻿@page "/ReplacementWordsOverviewPage"
+@using WebApp.Models
+@using WebApp.Clients
+
+@inject ReplacementWordsServiceClient ReplacementWordsServiceClient;
+
+<PageTitle>Replacement Words Overview</PageTitle>
+<h1>Replacement Words Overview</h1>
+<button>Create new</button>
+
+@if (_replacementWordModels == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@nameof(ReplacementWordModel.Id)</th>
+            <th>@nameof(ReplacementWordModel.Oldspeak)</th>
+            <th>@nameof(ReplacementWordModel.Newspeak)</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var replacementWordModel in _replacementWordModels)
+        {
+            <tr>
+                <td>@replacementWordModel.Id</td>
+                <td>@replacementWordModel.Oldspeak</td>
+                <td>@replacementWordModel.Newspeak</td>
+                <td>
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ReplacementWordModel>? _replacementWordModels;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var replacementWordModels = await ReplacementWordsServiceClient.GetReplacementWordsAsync();
+
+        if (replacementWordModels == null)
+        {
+            return;
+        }
+
+        _replacementWordModels = replacementWordModels.ToList();
+    }
+}

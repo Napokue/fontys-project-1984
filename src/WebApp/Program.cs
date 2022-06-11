@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<MessageServiceClient>();
-builder.Services.AddHttpClient<ReplacementWordServiceClient>();
+builder.Services.AddHttpClient<ReplacementWordsServiceClient>();
 
 var app = builder.Build();
 

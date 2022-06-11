@@ -5,19 +5,19 @@ namespace MessageService.Models.Rules;
 
 public class ReplacementWordRule : AbstractRule
 {
-    private readonly ReplacementWordServiceClient _replacementWordServiceClient;
+    private readonly ReplacementWordsServiceClient _replacementWordsServiceClient;
 
     public ReplacementWordRule(
         IMessageFactory messageFactory,
-        ReplacementWordServiceClient replacementWordServiceClient) 
+        ReplacementWordsServiceClient replacementWordsServiceClient) 
         : base(messageFactory)
     {
-        _replacementWordServiceClient = replacementWordServiceClient;
+        _replacementWordsServiceClient = replacementWordsServiceClient;
     }
     
     public override async Task<IMessage> ValidateMessage(IMessage message)
     {
-        var replacementWords = await _replacementWordServiceClient.GetAllAsync();
+        var replacementWords = await _replacementWordsServiceClient.GetAllAsync();
 
         var content = replacementWords!.Aggregate(message.Content,
             (current, replacementWord) => current.Replace(
