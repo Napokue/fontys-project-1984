@@ -60,6 +60,7 @@ app.MapPost("/", async (
     {
         return Results.Problem(e.Message);
     }
-});
+})
+.WithName("Send Message");
 
 app.Run();

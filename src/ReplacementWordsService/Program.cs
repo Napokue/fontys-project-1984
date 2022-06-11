@@ -2,6 +2,7 @@ using DatabaseLib;
 using DatabaseLib.Builders;
 using DatabaseLib.Factories;
 using DatabaseLib.Services;
+using Microsoft.AspNetCore.Mvc;
 using ReplacementWordsService.Models;
 using ReplacementWordsService.Repository;
 
@@ -27,6 +28,55 @@ builder.Services.AddSingleton(_ =>
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapPost("/", async (
+    [FromBody] ReplacementWord model,
+    ReplacementWordRepository replacementWordRepository) =>
+{
+    
+})
+.WithName("Create");
+
+app.MapPut("/", async (
+    [FromBody] ReplacementWord model,
+    ReplacementWordRepository replacementWordRepository) =>
+{
+    
+})
+.WithName("Update");
+
+app.MapDelete("/{id}", async (
+    [FromRoute] Guid id,
+    ReplacementWordRepository replacementWordRepository) =>
+{
+    
+})
+.WithName("Delete");
+
+
+
+app.MapGet("/{id}", async (
+    [FromRoute] Guid id,
+    ReplacementWordRepository replacementWordRepository) =>
+{
+    
+})
+.WithName("Get By Id");
+
+app.MapGet("/{oldspeak}", async (
+    [FromRoute] string oldspeak,
+    ReplacementWordRepository replacementWordRepository) =>
+{
+    
+})
+.WithName("Get By Oldspeak");
+
+app.MapGet("/all", async (
+    [FromQuery] int? skip, 
+    [FromQuery] int? take,
+    ReplacementWordRepository replacementWordRepository) =>
+{
+    
+})
+.WithName("Get All");
 
 app.Run();
