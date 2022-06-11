@@ -15,7 +15,8 @@ public class MessageValidator : IMessageValidator
 
     public async Task ValidateMessage(IMessage message, AbstractRule[] rules)
     {
-        message = rules.Aggregate(message, (current, rule) => rule.ValidateMessage(current));
+        message = rules.Aggregate(message, (current, rule) => 
+            rule.ValidateMessage(current).GetAwaiter().GetResult());
         await _textMessageRepository.AddAsync((TextMessage) message);
     }
 }

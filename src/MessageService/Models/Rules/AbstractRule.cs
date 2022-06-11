@@ -11,5 +11,5 @@ public abstract class AbstractRule
         MessageFactory = messageFactory;
     }
 
-    public abstract IMessage ValidateMessage(IMessage message);
+    public abstract Task<IMessage> ValidateMessage(IMessage message);
 }

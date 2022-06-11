@@ -1,12 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ReplacementWordsService.Models;
+namespace MessageService.Models;
 
 public class ReplacementWord
 {
-    [JsonPropertyName("id")]
-    public Guid Id { get; set; }
-    
     [JsonPropertyName("oldspeak")]
     public string Oldspeak { get; set; }
     

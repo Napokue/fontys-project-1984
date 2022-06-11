@@ -2,6 +2,7 @@ using DatabaseLib;
 using DatabaseLib.Builders;
 using DatabaseLib.Factories;
 using DatabaseLib.Services;
+using MessageService.Clients;
 using MessageService.Factories;
 using MessageService.Models;
 using MessageService.Models.Rules;
@@ -28,6 +29,8 @@ builder.Services.AddSingleton(_ =>
     return mappingService;
 });
 
+builder.Services.AddHttpClient<ReplacementWordServiceClient>();
+
 builder.Services.AddSingleton<TextMessageRepository>();
 builder.Services.AddSingleton<IMessageFactory, TextMessageFactory>();
 builder.Services.AddScoped<IMessageValidator, MessageValidator>();
@@ -38,7 +41,9 @@ builder.Services.AddScoped(provider =>
     return new AbstractRule[]
     {
         new LowercaseRule(messageFactory),
-        new UppercaseSpecificWordBaseRule(messageFactory, "Big Brother")
+        new UppercaseSpecificWordBaseRule(messageFactory, "Big Brother"),
+        new AmountOfWordsRule(messageFactory, 100),
+        new ReplacementWordRule(messageFactory, provider.GetService<ReplacementWordServiceClient>()!)
     };
 });
 

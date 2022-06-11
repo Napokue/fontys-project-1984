@@ -16,21 +16,21 @@ public class AmountOfWordsRule : AbstractRule
         _maximumAllowedWords = maximumAllowedWords;
     }
 
-    public override IMessage ValidateMessage(IMessage message)
+    public override Task<IMessage> ValidateMessage(IMessage message)
     {
         var sentences = SplitInto(message.Content, SentenceDelimiter).ToList();
 
         if (sentences.Count == 0)
         {
-            return message;
+            return Task.FromResult(message);
         }
 
         if (sentences.Count == 1)
         {
             var words = SplitInto(sentences[0], WordDelimiter).ToList();
             return words.Count > _maximumAllowedWords 
-                ? MessageFactory.Create(string.Empty) 
-                : message;
+                ? Task.FromResult(MessageFactory.Create(string.Empty)) 
+                : Task.FromResult(message);
         }
 
         var currentCount = 0;
@@ -48,7 +48,7 @@ public class AmountOfWordsRule : AbstractRule
             currentCount += words.Count;
         }
 
-        return new TextMessage(contentBuilder.ToString());
+        return Task.FromResult((IMessage) new TextMessage(contentBuilder.ToString()));
     }
 
     private IEnumerable<string> SplitInto(string input, string delimiter) =>

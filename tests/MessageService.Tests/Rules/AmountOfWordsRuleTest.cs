@@ -18,43 +18,43 @@ public class AmountOfWordsRuleTest
     }
 
     [Test]
-    public void TestNoSentence()
+    public async Task TestNoSentence()
     {
         var rule = new AmountOfWordsRule(_textMessageFactory, MaximumAllowedWords);
         
-        var validatedMessage = rule.ValidateMessage(_textMessageFactory.Create(string.Empty));
+        var validatedMessage = await rule.ValidateMessage(_textMessageFactory.Create(string.Empty));
         Assert.IsTrue(validatedMessage.Content == string.Empty);
     }
     
     [Test]
-    public void TestSingleTooLongSentence()
+    public async Task TestSingleTooLongSentence()
     {
         var rule = new AmountOfWordsRule(_textMessageFactory, MaximumAllowedWords);
 
         var sentence = GenerateSentence(1, MaximumAllowedWords + 1);
 
-        var validatedMessage = rule.ValidateMessage(_textMessageFactory.Create(sentence));
+        var validatedMessage = await rule.ValidateMessage(_textMessageFactory.Create(sentence));
         Assert.IsTrue(validatedMessage.Content == string.Empty);
     }
 
     [Test]
-    public void TestSingleSentence()
+    public async Task TestSingleSentence()
     {
         var rule = new AmountOfWordsRule(_textMessageFactory, MaximumAllowedWords);
 
         var sentence = GenerateSentence(1, MaximumAllowedWords);
 
-        var validatedMessage = rule.ValidateMessage(_textMessageFactory.Create(sentence));
+        var validatedMessage = await rule.ValidateMessage(_textMessageFactory.Create(sentence));
         Assert.IsTrue(sentence == validatedMessage.Content);
     }
 
     [Test]
-    public void TestMultipleSentencesTooLong()
+    public async Task TestMultipleSentencesTooLong()
     {
         var rule = new AmountOfWordsRule(_textMessageFactory, MaximumAllowedWords);
         var sentence = GenerateSentence(MaximumAllowedWords + 1, 1);
 
-        var validatedMessage = rule.ValidateMessage(_textMessageFactory.Create(sentence));
+        var validatedMessage = await rule.ValidateMessage(_textMessageFactory.Create(sentence));
 
         var sentenceWordCount = sentence.Split(".").Length - 1;
         var validatedMessageWordCount = validatedMessage.Content.Split(".").Length;
@@ -62,12 +62,12 @@ public class AmountOfWordsRuleTest
     }
 
     [Test]
-    public void TestMultipleSentences()
+    public async Task TestMultipleSentences()
     {
         var rule = new AmountOfWordsRule(_textMessageFactory, MaximumAllowedWords);
         var sentence = GenerateSentence(MaximumAllowedWords, 1);
 
-        var validatedMessage = rule.ValidateMessage(_textMessageFactory.Create(sentence));
+        var validatedMessage = await rule.ValidateMessage(_textMessageFactory.Create(sentence));
 
         var sentenceWordCount = sentence.Split(".").Length;
         var validatedMessageWordCount = validatedMessage.Content.Split(".").Length;

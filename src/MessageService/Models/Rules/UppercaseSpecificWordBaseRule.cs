@@ -12,9 +12,10 @@ public class UppercaseSpecificWordBaseRule : AbstractRule
         _specificWord = specificWord.ToUpper();
     }
     
-    public override IMessage ValidateMessage(IMessage message)
+    public override Task<IMessage> ValidateMessage(IMessage message)
     {
-        return MessageFactory.Create(message.Content.Replace(_specificWord, _specificWord,
+        var newMessage = MessageFactory.Create(message.Content.Replace(_specificWord, _specificWord,
             StringComparison.OrdinalIgnoreCase));
+        return Task.FromResult(newMessage);
     }
 }

@@ -13,8 +13,8 @@ public class LowercaseRule : AbstractRule
             ? word.ToLower() 
             : word;
 
-    public override IMessage ValidateMessage(IMessage message)
+    public override Task<IMessage> ValidateMessage(IMessage message)
     {
-        return MessageFactory.Create(message.Content.ToLower());
+        return Task.FromResult(MessageFactory.Create(message.Content.ToLower()));
     }
 }
