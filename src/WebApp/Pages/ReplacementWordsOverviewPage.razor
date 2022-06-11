@@ -33,7 +33,7 @@ else
                 <td>@replacementWordModel.Newspeak</td>
                 <td>
                     <button @onclick="async () => await UpdateReplacementWord(replacementWordModel)">Edit</button>
-                    <button>Delete</button>
+                    <button @onclick="async () => await DeleteReplacementWord(replacementWordModel)">Delete</button>
                 </td>
             </tr>
         }
@@ -72,6 +72,11 @@ else
 
     private async Task UpdateReplacementWord(ReplacementWordModel model)
     {
+        if (_replacementWordModels == null)
+        {
+            return;
+        }
+        
         var parameters = new ModalParameters();
         parameters.Add(nameof(ReplacementWordsEditModal.ReplacementWordId), model.Id);
 
@@ -80,7 +85,19 @@ else
 
         if (!result.Cancelled)
         {
-            model = (ReplacementWordModel) result.Data;
+            var index = _replacementWordModels.IndexOf(model);
+            _replacementWordModels[index] = (ReplacementWordModel) result.Data;
         }
+    }
+    
+    private async Task DeleteReplacementWord(ReplacementWordModel replacementWordModel)
+    {
+        if (_replacementWordModels == null)
+        {
+            return;
+        }
+        
+        _replacementWordModels.Remove(replacementWordModel);
+        await ReplacementWordsServiceClient.DeleteReplacementWordAsync(replacementWordModel.Id);
     }
 }
