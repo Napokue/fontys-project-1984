@@ -3,18 +3,18 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:54693",
+      "applicationUrl": "http://localhost:54997",
       "sslPort": 44382
     }
   },
   "profiles": {
-    "ReplacementWordService": {
+    "ReplacementWordsService": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:7249;http://localhost:5249",
+      "applicationUrl": "https://localhost:7250;http://localhost:5250",
       "dotnetRunMessages": true
     },
     "IIS Express": {

@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{72B27CDD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageService.Tests", "tests\MessageService.Tests\MessageService.Tests.csproj", "{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplacementWordService", "src\ReplacementWordService\ReplacementWordService.csproj", "{CFEA1005-61A0-43A2-9276-F269F2A67578}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplacementWordsService", "src\ReplacementWordsService\ReplacementWordsService.csproj", "{E2C36A1F-AAFF-441B-A15A-A26CF4E331D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E9E9ED7-AE49-46DF-BAC5-EFD457956DED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFEA1005-61A0-43A2-9276-F269F2A67578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFEA1005-61A0-43A2-9276-F269F2A67578}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFEA1005-61A0-43A2-9276-F269F2A67578}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFEA1005-61A0-43A2-9276-F269F2A67578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2C36A1F-AAFF-441B-A15A-A26CF4E331D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2C36A1F-AAFF-441B-A15A-A26CF4E331D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2C36A1F-AAFF-441B-A15A-A26CF4E331D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2C36A1F-AAFF-441B-A15A-A26CF4E331D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

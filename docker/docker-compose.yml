@@ -24,6 +24,32 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - message-service-postgres-data:/var/lib/postgresql/data
+  replacement-words-service:
+    hostname: replacement-words-service
+    container_name: replacement-words-service
+    build:
+      context: ../
+      dockerfile: ./src/ReplacementWordsService/docker/Dockerfile
+    expose:
+      - 80
+    ports:
+      - "2848:80"
+  replacement-words-service-postgres:
+    hostname: replacement-words-service-postgres
+    container_name: replacement-words-service-postgres
+    build: ../src/ReplacementWordsService/docker/postgres
+    command: postgres -c 'max_connections=100'
+    expose:
+      - 5432
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=Admin
+      - POSTGRES_PASSWORD=P@ssWord1!
+      - POSTGRES_DB=postgres
+    volumes:
+      - replacement-words-service-postgres-data:/var/lib/postgresql/data
+    
   web-app:
     hostname: web-app
     container_name: web-app
@@ -31,8 +57,9 @@ services:
       context: ../
       dockerfile: ./src/WebApp/docker/Dockerfile
     ports:
-      - "2848:80"
+      - "2849:80"
 
 volumes:
   message-service-postgres-data:
+  replacement-words-service-postgres-data:
 
