@@ -62,7 +62,7 @@ app.MapPut("/", async (
 })
 .WithName("Update");
 
-app.MapDelete("/{id}", async (
+app.MapDelete("/{id:guid}", async (
     [FromRoute] Guid id,
     ReplacementWordRepository replacementWordRepository) =>
 {
@@ -78,7 +78,7 @@ app.MapDelete("/{id}", async (
 })
 .WithName("Delete");
 
-app.MapGet("/{id}", async (
+app.MapGet("/{id:guid}", async (
     [FromRoute] Guid id,
     ReplacementWordRepository replacementWordRepository) =>
 {
@@ -93,22 +93,6 @@ app.MapGet("/{id}", async (
     }
 })
 .WithName("Get By Id");
-
-app.MapGet("/{oldspeak}", async (
-    [FromRoute] string oldspeak,
-    ReplacementWordRepository replacementWordRepository) =>
-{
-    try
-    {
-        var replacementWord = await replacementWordRepository.GetByOldspeakAsync(oldspeak);
-        return replacementWord == null ? Results.Problem("Replacement Word not found") : Results.Ok(replacementWord);
-    }
-    catch (Exception e)
-    {
-        return Results.Problem(e.Message);
-    }
-})
-.WithName("Get By Oldspeak");
 
 app.MapGet("/all", async (
     [FromQuery] int? skip, 

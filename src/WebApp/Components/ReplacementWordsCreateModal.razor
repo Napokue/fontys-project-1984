@@ -2,7 +2,6 @@
 <h3>ReplacementWordsCreateModal</h3>
 
 <div class="simple-form">
-
     <div class="form-group">
         <label for="oldspeak">@nameof(_replacementWordModel.Oldspeak)</label>
         <input @bind="@_replacementWordModel.Oldspeak" type="text" class="form-control" id="oldspeak" placeholder="Enter Oldspeak" />
@@ -13,21 +12,21 @@
         <input @bind="@_replacementWordModel.Newspeak" type="text" class="form-control" id="newspeak" placeholder="Enter Newspeak" />
     </div>
 
-    <button @onclick="Create" class="btn btn-primary">Create</button>
-    <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+    <button @onclick="async () => await Create()" class="btn btn-primary">Create</button>
+    <button @onclick="async () => await Cancel()" class="btn btn-secondary">Cancel</button>
 </div>
 
 @code {
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
     private readonly ReplacementWordModel _replacementWordModel = new();
 
-    void Create()
+    private async Task Create()
     {
-        ModalInstance.CloseAsync(ModalResult.Ok(_replacementWordModel));
+        await ModalInstance.CloseAsync(ModalResult.Ok(_replacementWordModel));
     }
 
-    void Cancel()
+    private async Task Cancel()
     {
-        ModalInstance.CancelAsync();
+        await ModalInstance.CancelAsync();
     }
 }

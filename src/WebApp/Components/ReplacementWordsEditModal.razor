@@ -1,0 +1,54 @@
+﻿@using WebApp.Models
+@using WebApp.Clients
+
+@inject ReplacementWordsServiceClient ReplacementWordsServiceClient;
+
+<h3>ReplacementWordsEditModal</h3>
+
+@if (_replacementWordModel == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="simple-form">
+        <div class="form-group">
+            <label for="oldspeak">@nameof(_replacementWordModel.Oldspeak)</label>
+            <input @bind="@_replacementWordModel.Oldspeak" type="text" class="form-control" id="oldspeak" placeholder="Enter Oldspeak"/>
+        </div>
+
+        <div class="form-group">
+            <label for="newspeak">@nameof(_replacementWordModel.Newspeak)</label>
+            <input @bind="@_replacementWordModel.Newspeak" type="text" class="form-control" id="newspeak" placeholder="Enter Newspeak"/>
+        </div>
+
+        <button @onclick="async () => await Update()" class="btn btn-primary">Update</button>
+        <button @onclick="async () => await Cancel()" class="btn btn-secondary">Cancel</button>
+    </div>
+}
+
+@code {
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    
+    [Parameter]
+    public Guid ReplacementWordId { get; set; }
+
+    private ReplacementWordModel? _replacementWordModel;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine($"ID: {ReplacementWordId}");
+        _replacementWordModel = await ReplacementWordsServiceClient.GetReplacementWordByIdAsync(ReplacementWordId);
+    }
+    
+    private async Task Update()
+    {
+        await ReplacementWordsServiceClient.UpdateReplacementWordAsync(_replacementWordModel);
+        await ModalInstance.CloseAsync(ModalResult.Ok(_replacementWordModel));
+    }
+
+    private async Task Cancel()
+    {
+        await ModalInstance.CancelAsync();
+    }
+}

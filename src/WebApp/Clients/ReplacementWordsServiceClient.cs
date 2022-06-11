@@ -14,6 +14,9 @@ public class ReplacementWordsServiceClient
     
     public async Task<IEnumerable<ReplacementWordModel>?> GetReplacementWordsAsync(int skip = 0, int take = 10) =>
         await _client.GetFromJsonAsync<IEnumerable<ReplacementWordModel>>($"/all?skip={skip}&take={take}");
+    
+    public async Task<ReplacementWordModel?> GetReplacementWordByIdAsync(Guid id) =>
+        await _client.GetFromJsonAsync<ReplacementWordModel>($"/{id}");
 
     public async Task CreateReplacementWordAsync(ReplacementWordModel replacementWordModel) =>
         await _client.PostAsJsonAsync("/", replacementWordModel);

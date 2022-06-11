@@ -32,7 +32,7 @@ else
                 <td>@replacementWordModel.Oldspeak</td>
                 <td>@replacementWordModel.Newspeak</td>
                 <td>
-                    <button>Edit</button>
+                    <button @onclick="async () => await UpdateReplacementWord(replacementWordModel)">Edit</button>
                     <button>Delete</button>
                 </td>
             </tr>
@@ -60,13 +60,27 @@ else
     
     private async Task CreateReplacementWord()
     {
-        var modal = Modal.Show<ReplacementWordsCreateModal>("Test");
+        var modal = Modal.Show<ReplacementWordsCreateModal>("Create");
         var result = await modal.Result;
 
         if (!result.Cancelled)
         {
             var replacementWordModel = (ReplacementWordModel) result.Data;
             await ReplacementWordsServiceClient.CreateReplacementWordAsync(replacementWordModel);
+        }
+    }
+
+    private async Task UpdateReplacementWord(ReplacementWordModel model)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(ReplacementWordsEditModal.ReplacementWordId), model.Id);
+
+        var modal = Modal.Show<ReplacementWordsEditModal>("Update", parameters);
+        var result = await modal.Result;
+
+        if (!result.Cancelled)
+        {
+            model = (ReplacementWordModel) result.Data;
         }
     }
 }

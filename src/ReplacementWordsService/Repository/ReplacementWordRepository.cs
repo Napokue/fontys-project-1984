@@ -61,23 +61,6 @@ public class ReplacementWordRepository : IRepository<ReplacementWord>
         return queryResult.FirstOrDefault();
     }
     
-    public async Task<ReplacementWord?> GetByOldspeakAsync(string oldspeak)
-    {
-        var queryCommandBuilder = _queryCommandBuilderFactory.Create();
-
-        await using var connection = (PostgresConnection) _connectionFactory.Create(ConnectionString);
-        
-        queryCommandBuilder
-            .SetConnection(connection)
-            .SetQuery(
-                "SELECT * FROM public.\"replacement_words\" where oldspeak = ($1);")
-            .AddParameter(oldspeak);
-        
-        await using var command = queryCommandBuilder.Build();
-        var queryResult = await _queryService.ExecuteReaderAsync<IQueryCommand, ReplacementWord>(command);
-        return queryResult.FirstOrDefault();
-    }
-
     public async Task<List<ReplacementWord>> GetAllAsync(int skip, int take)
     {
         var queryCommandBuilder = _queryCommandBuilderFactory.Create();
