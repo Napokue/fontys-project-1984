@@ -26,13 +26,23 @@ builder.Services.AddSingleton(_ =>
     return mappingService;
 });
 
+builder.Services.AddSingleton<ReplacementWordRepository>();
+
 var app = builder.Build();
 
 app.MapPost("/", async (
     [FromBody] ReplacementWord model,
     ReplacementWordRepository replacementWordRepository) =>
 {
-    
+    try
+    {
+        var success = await replacementWordRepository.AddAsync(model);
+        return success ? Results.Ok() : Results.Problem();
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
 })
 .WithName("Create");
 
@@ -40,7 +50,15 @@ app.MapPut("/", async (
     [FromBody] ReplacementWord model,
     ReplacementWordRepository replacementWordRepository) =>
 {
-    
+    try
+    {
+        var success = await replacementWordRepository.UpdateAsync(model);
+        return success ? Results.Ok() : Results.Problem();
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
 })
 .WithName("Update");
 
@@ -48,17 +66,31 @@ app.MapDelete("/{id}", async (
     [FromRoute] Guid id,
     ReplacementWordRepository replacementWordRepository) =>
 {
-    
+    try
+    {
+        var success = await replacementWordRepository.DeleteByIdAsync(id);
+        return success ? Results.Ok() : Results.Problem();
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
 })
 .WithName("Delete");
-
-
 
 app.MapGet("/{id}", async (
     [FromRoute] Guid id,
     ReplacementWordRepository replacementWordRepository) =>
 {
-    
+    try
+    {
+        var replacementWord = await replacementWordRepository.GetByIdAsync(id);
+        return replacementWord == null ? Results.Problem("Replacement Word not found") : Results.Ok(replacementWord);
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
 })
 .WithName("Get By Id");
 
@@ -66,7 +98,15 @@ app.MapGet("/{oldspeak}", async (
     [FromRoute] string oldspeak,
     ReplacementWordRepository replacementWordRepository) =>
 {
-    
+    try
+    {
+        var replacementWord = await replacementWordRepository.GetByOldspeakAsync(oldspeak);
+        return replacementWord == null ? Results.Problem("Replacement Word not found") : Results.Ok(replacementWord);
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
 })
 .WithName("Get By Oldspeak");
 
@@ -75,7 +115,18 @@ app.MapGet("/all", async (
     [FromQuery] int? take,
     ReplacementWordRepository replacementWordRepository) =>
 {
-    
+    try
+    {
+        skip ??= 0;
+        take ??= 10;
+        
+        var replacementWords = await replacementWordRepository.GetAllAsync(skip.Value, take.Value);
+        return Results.Ok(replacementWords);
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
 })
 .WithName("Get All");
 
