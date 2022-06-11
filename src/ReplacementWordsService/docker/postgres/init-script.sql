@@ -14,3 +14,12 @@ CREATE TABLE IF NOT EXISTS replacement_words
 
 ALTER TABLE replacement_words
     OWNER TO "Admin";
+
+INSERT INTO public.replacement_words (id, oldspeak, newspeak)
+VALUES (DEFAULT, 'war'::text, 'peace'::text);
+
+INSERT INTO public.replacement_words (id, oldspeak, newspeak)
+VALUES (DEFAULT, 'freedom'::text, 'slavery'::text);
+
+INSERT INTO public.replacement_words (id, oldspeak, newspeak)
+VALUES (DEFAULT, 'ignorance'::text, 'strength'::text);
