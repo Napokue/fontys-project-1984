@@ -1,3 +1,4 @@
+using Blazored.Modal;
 using WebApp.Clients;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient<MessageServiceClient>();
 builder.Services.AddHttpClient<ReplacementWordsServiceClient>();
+builder.Services.AddBlazoredModal();
 
 var app = builder.Build();
 
