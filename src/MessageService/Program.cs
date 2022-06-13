@@ -68,4 +68,24 @@ app.MapPost("/", async (
 })
 .WithName("Send Message");
 
+app.MapGet("/all", async (
+    [FromQuery] int? skip, 
+    [FromQuery] int? take,
+    TextMessageRepository textMessageRepository) =>
+{
+    try
+    {
+        skip ??= 0;
+        take ??= 10;
+    
+        var messageModels = await textMessageRepository.GetAllAsync(skip.Value, take.Value);
+        return Results.Ok(messageModels);
+    }
+    catch (Exception e)
+    {
+        return Results.Problem(e.Message);
+    }
+})
+.WithName("Get All");
+
 app.Run();

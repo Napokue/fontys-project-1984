@@ -1,0 +1,49 @@
+﻿@page "/MessageOverviewPage"
+@using WebApp.Clients
+@using WebApp.Models
+
+@inject MessageServiceClient MessageServiceClient;
+
+<PageTitle>Message Overview</PageTitle>
+<h1>Message Overview</h1>
+
+@if (_messageModels == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@nameof(MessageModel.Id)</th>
+            <th>@nameof(MessageModel.Content)</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var messageModel in _messageModels)
+        {
+            <tr>
+                <td>@messageModel.Id</td>
+                <td>@messageModel.Content</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<MessageModel>? _messageModels;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var messageModels = await MessageServiceClient.GetMessagesAsync();
+
+        if (messageModels == null)
+        {
+            return;
+        }
+
+        _messageModels = messageModels.ToList();
+    }
+}
